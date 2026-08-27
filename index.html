@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Wealth Planner</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>💰 Smart Wealth Planner</h1>
+        <p>Plan your salary, expenses and investments intelligently.</p>
+    </header>
+
+
+    <div class="main-grid">
+
+        <!-- INPUT FORM -->
+        <div class="card form-card">
+
+            <h2>Enter Your Financial Details</h2>
+
+            <div class="form-group">
+                <label>Monthly Salary (₹)</label>
+                <input type="number" id="salary" placeholder="Example: 50000">
+            </div>
+
+            <div class="form-group">
+                <label>Monthly Essential Expenses (₹)</label>
+                <input type="number" id="expenses" placeholder="Example: 20000">
+            </div>
+
+            <div class="form-group">
+                <label>Monthly EMI / Debt (₹)</label>
+                <input type="number" id="emi" placeholder="Example: 5000">
+            </div>
+
+            <div class="form-group">
+                <label>Current Savings (₹)</label>
+                <input type="number" id="savings" placeholder="Example: 100000">
+            </div>
+
+            <div class="form-group">
+                <label>Your Age</label>
+                <input type="number" id="age" placeholder="Example: 25">
+            </div>
+
+            <div class="form-group">
+
+                <label>Risk Preference</label>
+
+                <select id="risk">
+
+                    <option value="low">Low Risk</option>
+
+                    <option value="medium" selected>
+                        Medium Risk
+                    </option>
+
+                    <option value="high">High Risk</option>
+
+                </select>
+
+            </div>
+
+            <button onclick="calculatePlan()">
+                Generate My Financial Plan
+            </button>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+        <div class="card result-card">
+
+            <h2>Your Financial Summary</h2>
+
+            <div id="emptyMessage">
+                Enter your details and click the button.
+            </div>
+
+            <div id="results" style="display:none;">
+
+                <div class="summary-grid">
+
+                    <div class="summary-box salary-box">
+                        <h3>Monthly Salary</h3>
+                        <p id="salaryResult">₹0</p>
+                    </div>
+
+                    <div class="summary-box">
+                        <h3>Total Expenses</h3>
+                        <p id="expenseResult">₹0</p>
+                    </div>
+
+                    <div class="summary-box surplus-box">
+                        <h3>Available Surplus</h3>
+                        <p id="surplusResult">₹0</p>
+                    </div>
+
+                    <div class="summary-box">
+                        <h3>Suggested Investment</h3>
+                        <p id="investmentResult">₹0</p>
+                    </div>
+
+                </div>
+
+                <div id="warningBox"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUDGET SECTION -->
+
+    <div class="card full-card" id="planSection" style="display:none;">
+
+        <h2>📊 Recommended Monthly Financial Structure</h2>
+
+        <div class="plan-grid">
+
+            <div class="plan-item">
+                <span>🏠 Expenses</span>
+                <strong id="planExpenses">₹0</strong>
+            </div>
+
+            <div class="plan-item">
+                <span>📈 Investments</span>
+                <strong id="planInvestment">₹0</strong>
+            </div>
+
+            <div class="plan-item">
+                <span>🛡 Emergency Fund</span>
+                <strong id="planEmergency">₹0</strong>
+            </div>
+
+            <div class="plan-item">
+                <span>🎯 Personal / Goals</span>
+                <strong id="planPersonal">₹0</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- INVESTMENT SECTION -->
+
+    <div class="card full-card" id="investmentSection" style="display:none;">
+
+        <h2>💹 Investment Allocation</h2>
+
+        <p id="riskText"></p>
+
+        <div class="allocation-grid">
+
+            <div class="allocation-card">
+
+                <h3>📈 Equity</h3>
+
+                <p id="equityPercent">0%</p>
+
+                <strong id="equityAmount">₹0</strong>
+
+            </div>
+
+            <div class="allocation-card">
+
+                <h3>🏦 Debt / Fixed Income</h3>
+
+                <p id="debtPercent">0%</p>
+
+                <strong id="debtAmount">₹0</strong>
+
+            </div>
+
+            <div class="allocation-card">
+
+                <h3>🥇 Gold</h3>
+
+                <p id="goldPercent">0%</p>
+
+                <strong id="goldAmount">₹0</strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EMERGENCY FUND -->
+
+    <div class="card full-card" id="emergencySection" style="display:none;">
+
+        <h2>🛡 Emergency Fund Analysis</h2>
+
+        <p id="emergencyText"></p>
+
+        <div class="progress-container">
+
+            <div id="emergencyProgress"></div>
+
+        </div>
+
+        <p id="emergencyStatus"></p>
+
+    </div>
+
+
+    <!-- CHARTS -->
+
+    <div class="chart-grid">
+
+        <div class="card chart-card">
+            <h2>Salary Distribution</h2>
+
+            <canvas id="budgetChart"></canvas>
+        </div>
+
+        <div class="card chart-card">
+            <h2>Investment Distribution</h2>
+
+            <canvas id="investmentChart"></canvas>
+        </div>
+
+    </div>
+
+
+    <!-- GOAL SECTION -->
+
+    <div class="card full-card" id="goalSection" style="display:none;">
+
+        <h2>🎯 Financial Suggestions</h2>
+
+        <ul id="suggestionsList"></ul>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
